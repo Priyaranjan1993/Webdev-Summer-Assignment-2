@@ -1,11 +1,13 @@
 package com.example.webdevassignment2.models;
 
+import java.util.List;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,6 +21,10 @@ public class Course {
 	private Date created;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modified;
+	
+	@OneToMany(mappedBy="course")
+	private List<Module> modules;
+	
 	// setters and getters for all private fields
 	public int getId() {
 		return id;
@@ -43,5 +49,11 @@ public class Course {
 	}
 	public void setModified(Date modified) {
 		this.modified = modified;
+	}
+	public List<Module> getModules() {
+		return modules;
+	}
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
 	}
 }
