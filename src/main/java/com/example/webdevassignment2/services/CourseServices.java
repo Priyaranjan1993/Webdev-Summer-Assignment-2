@@ -11,7 +11,8 @@ import com.example.webdevassignment2.repositories.CourseRepository;
 public class CourseServices {
 	@Autowired
 	CourseRepository courseRepository;
-	
+
+	//get all course list
 	@GetMapping("/api/course")
 	public Iterable<Course> findAllCourses() {
 		return courseRepository.findAll();
