@@ -1,5 +1,7 @@
 package com.example.webdevassignment2.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,14 +27,21 @@ public class CourseServices {
 	}
 
 	@PostMapping("/api/course")
-	public Course createCourse
-	(@RequestBody Course course) {
+	public Course createCourse(@RequestBody Course course) {
 		return courseRepository.save(course);
 	}
-	
+
 	@DeleteMapping("/api/course/{courseId}")
-	public void deleteCourse(
-	@PathVariable("courseId") int id) {
-	courseRepository.deleteById(id);
+	public void deleteCourse(@PathVariable("courseId") int id) {
+		courseRepository.deleteById(id);
 	}
+
+	@GetMapping("/api/course/{courseId}")	
+	public Course findCourseById(@PathVariable("courseId") int id) {
+		Optional<Course> data = courseRepository.findById(id);
+		if(data.isPresent()) {
+			return data.get();
+		}
+		return null;
+	}	
 }
