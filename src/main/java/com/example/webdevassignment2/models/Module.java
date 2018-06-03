@@ -24,6 +24,12 @@ public class Module {
 	@OneToMany(mappedBy="module")
 	private List<Lesson> lessons;
 	
+	public List<Lesson> getLessons() {
+		return lessons;
+	}
+	public void setLessons(List<Lesson> lessons) {
+		this.lessons = lessons;
+	}
 	public int getId() {
 		return id;
 	}
