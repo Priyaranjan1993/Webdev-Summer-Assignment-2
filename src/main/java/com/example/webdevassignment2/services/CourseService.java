@@ -14,11 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.webdevassignment2.models.Course;
 import com.example.webdevassignment2.repositories.CourseRepository;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseService {
 	@Autowired
 	CourseRepository courseRepository;
+
+	TimeZone timeZone = TimeZone.getTimeZone("US/Eastern");
+	String dateFormat = "MMMM dd,yyyy";
+
 
 	//get all course list
 	@GetMapping("/api/course")
@@ -28,6 +39,16 @@ public class CourseService {
 
 	@PostMapping("/api/course")
 	public Course createCourse(@RequestBody Course course) {
+		Date currentDate = new Date();
+		DateFormat format = new SimpleDateFormat(dateFormat);
+		format.setTimeZone(timeZone);
+		String strTodayDate = format.format(currentDate);
+		try {
+			course.setCreated(new SimpleDateFormat("MMMM dd,yyyy").parse(strTodayDate));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return courseRepository.save(course);
 	}
 
